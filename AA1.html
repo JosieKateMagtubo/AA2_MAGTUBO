@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Supplies Inventory System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #B5E6C4;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .button-container {
+            width: 100%;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .button-container button {
+            margin: 5px;
+            padding: 10px 20px;
+            background-color: black;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .button-container button:hover {
+            background-color: #3e8e41;
+        }
+
+        .inventory-actions {
+            border: 3px solid black;
+            padding: 10px;
+            margin-bottom: 15px;
+            width: 30%;
+        }
+
+        h3 {
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            width: calc(100% - 22px);
+            padding: 5px;
+            margin-bottom: 5px;
+            border: 1px solid #ddd;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Supplies Inventory by MAGTUBO, LICAYAN, LICERALDE</h1>
+    <div class="container">
+        <div class="inventory-actions">
+            <button onclick="addItemPrompt()">Add an Item</button>
+        </div>
+        <div class="inventory-actions">
+            <button onclick="modifyItemPrompt()">Modify Item</button>
+        </div>
+        <div class="inventory-actions">
+            <button onclick="removeItemPrompt()">Remove an Item</button>
+        </div>
+        <div class="inventory-actions">
+            <h2>Inventory</h2>
+            <table id="inventory-table">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody id="inventory-body"></tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        let supply = [];
+
+        function addItem(name, num) {
+            const existingItemIndex = supply.findIndex(item => item.itemName === name);
+            if (existingItemIndex !== -1) {
+                supply[existingItemIndex].noOfItem += num;
+            } else {
+                supply.push({ itemName: name, noOfItem: num });
+            }
+            displayItems();
+        }
+
+        function addNoOfItem(num) {
+            const name = prompt("Enter item name to add quantity:");
+            const existingItem = supply.find(item => item.itemName === name);
+            if (!existingItem || isNaN(num) || num <= 0) {
+                alert("Invalid input. Please enter valid item name and quantity.");
+                return;
+            }
+            existingItem.noOfItem += num;
+            displayItems();
+        }
+
+        function subNoOfItem(num) {
+            const name = prompt("Enter item name to subtract quantity:");
+            const existingItem = supply.find(item => item.itemName === name);
+            if (!existingItem || isNaN(num) || num <= 0) {
+                alert("Invalid input. Please enter valid item name and quantity.");
+                return;
+            }
+            if (existingItem.noOfItem < num) {
+                alert("Not enough quantity to subtract.");
+                return;
+            }
+            existingItem.noOfItem -= num;
+            displayItems();
+        }
+
+        function removeItem(name) {
+            const itemIndex = supply.findIndex(item => item.itemName === name);
+            if (itemIndex !== -1) {
+                supply.splice(itemIndex, 1);
+                displayItems();
+            } else {
+                alert("Item not found in inventory.");
+            }
+        }
+
+        function displayItems() {
+            const tableBody = document.getElementById("inventory-body");
+            tableBody.innerHTML = "";
+
+            supply.forEach(item => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${item.itemName}</td>
+                    <td>${item.noOfItem}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function addItemPrompt() {
+            const name = prompt("Enter item name:");
+            const quantity = parseInt(prompt("Enter quantity:"));
+            if (!name || isNaN(quantity) || quantity <= 0) {
+                alert("Please enter valid item name and quantity.");
+                return;
+            }
+            addItem(name, quantity);
+        }
+
+        function modifyItemPrompt() {
+            const operation = prompt("Enter 'add' or 'sub' to modify item quantity:");
+            if (operation === "add") {
+                const quantity = parseInt(prompt("Enter quantity to add:"));
+                addNoOfItem(quantity);
+            } else if (operation === "sub") {
+                const quantity = parseInt(prompt("Enter quantity to subtract:"));
+                subNoOfItem(quantity);
+            } else {
+                alert("Invalid operation.");
+            }
+        }
+
+        function removeItemPrompt() {
+            const name = prompt("Enter item name to remove:");
+            if (!name) {
+                alert("Invalid input. Please enter valid item name.");
+                return;
+            }
+            removeItem(name);
+        }
+
+        displayItems();
+    </script>
+</body>
+</html>
