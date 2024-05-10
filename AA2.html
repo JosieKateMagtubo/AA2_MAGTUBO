@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Website Sign-up</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url("file:///C:/Users/userpc/Downloads/Untitled%20design%20(1).jpg"); 
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8); /* Added background color with opacity */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        fieldset {
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+        legend {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        input[type="text"],
+        input[type="email"],
+        select,
+        textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s ease;
+        }
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #4CAF50;
+        }
+        input[type="submit"],
+        input[type="reset"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover,
+        input[type="reset"]:hover {
+            background-color: #45a049;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Sign-up Now !</h1>
+    </header>
+
+    <form id="signupForm" onsubmit="return false;">
+        <fieldset>
+		
+            <legend>Sign-up Form</legend>
+            <label for="name">Name:</label>
+            <input type="text" id="name" required>
+            <label for="username">Preferred Username:</label>
+            <input type="text" id="username" required>
+            <label for="gender">Gender:</label>
+            <select id="gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Prefer not to mention</option>
+            </select>
+            <label for="password">Password:</label>
+            <input type="password" id="password" required>
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" required>
+            <label for="address">Address:</label>
+            <textarea id="address" rows="4" required></textarea>
+            <label for="interest">Interests:</label>
+            <textarea id="interest" rows="4" required></textarea>
+            <input type="submit" value="Submit" onclick="displayInfo()">
+            <input type="reset" value="Reset" onclick="resetForm()">
+        </fieldset>
+		
+    </form>
+
+    <div id="output"></div>
+
+    <script>
+	
+        function displayInfo() {
+            const name = document.getElementById("name").value;
+            const username = document.getElementById("username").value;
+            const gender = document.getElementById("gender").value;
+            const password = document.getElementById("password").value;
+            const email = document.getElementById("email").value;
+            const address = document.getElementById("address").value;
+            const interest = document.getElementById("interest").value;
+
+            const outputDiv = document.getElementById("output");
+            outputDiv.innerHTML = `
+                <h2>Information provided:</h2>
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Preferred Username:</strong> ${username}</p>
+                <p><strong>Gender:</strong> ${gender}</p>
+                <p><strong>Email Address:</strong> ${email}</p>
+                <p><strong>Address:</strong> ${address}</p>
+                <p><strong>Interests:</strong> ${interest}</p>
+            `;
+        }
+
+        function resetForm() {
+            document.getElementById("signupForm").reset();
+            document.getElementById("output").innerHTML = "";
+        }
+		
+    </script>
+</body>
+</html>
